@@ -13,16 +13,16 @@ const DropdownHeader = styled.div`
     justify-content: center;
     align-items: center;
     background-color: #00CED1;
-    color: white;
 
     & > button {
         height: 100%;
         width: 100%;
         border: none;
-        background-color: transparent;
+        background-color: ${props => props.headerBackgroundColor ? props.headerBackgroundColor : 'transparent'};
         font-size: 120%;
         cursor: pointer;
         outline: none;
+        color: ${props => props.headerColor ? props.headerColor : 'white'};
     }
 
     &:hover {
@@ -47,6 +47,7 @@ const DropdownListItem = styled.div`
     align-items: center;
     border-bottom: 1px solid grey;
     border-right: 1px solid grey;
+    position: relative;
 
     & > button {
         height: 100%;
@@ -64,6 +65,16 @@ const DropdownListItem = styled.div`
     &:hover {
         background-color: grey;
     }
+
+    &::after {
+        content: '';
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background-color: inherit;
+        left: 100%;
+        border: 1px solid grey;
+    }
 `
 
 class Dropdown extends React.Component {
@@ -77,37 +88,42 @@ class Dropdown extends React.Component {
         }))
     }
 
-    renderDropdownListItems = () => {
-        const { isCollapsed } = this.state
-        const { list } = this.props
+    onListItemClick = () => {
 
-        return <DropdownList>
-            {isCollapsed && list.map((item, index) => <DropdownListItem key={index}>
-                    <button
-                        onClick={() =>{ }}
-                    >{item}</button>
-                </DropdownListItem>
-            )}
-        </DropdownList>
-        
     }
 
     render() {
         const {
             title,
             list,
+            headerColor,
+            headerBackgroundColor,
+            hiddenContent
         } = this.props
+        console.log(hiddenContent)
+        const { isCollapsed } = this.state
 
         return(
             <DropdownContainer>
-                <DropdownHeader>
+                <DropdownHeader
+                    headerColor={headerColor}
+                    headerBackgroundColor={headerBackgroundColor}
+                    hiddenContent={hiddenContent}
+                >
                     <button
                         onClick={() => this.onHeaderClick()}
                     >
                         {title}
                     </button>
                 </DropdownHeader>
-                {this.renderDropdownListItems()}
+                <DropdownList>
+                    {isCollapsed && list.map((item, index) => <DropdownListItem key={index}>
+                            <button
+                                onClick={() =>{  }}
+                            >{Object.keys(item)}</button>
+                        </DropdownListItem>
+                    )}
+                </DropdownList>
                 
             </DropdownContainer>
         )

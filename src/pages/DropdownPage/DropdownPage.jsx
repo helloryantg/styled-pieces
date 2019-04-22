@@ -14,11 +14,11 @@ const DropdownPageContainer = styled.div`
 class DropdownPage extends React.Component {
     state = {
         dropdownList: [
-            'Facebook',
-            'Instagram',
-            'LinkedIn',
-            'GitHub',
-            'Snapchat'
+            { Facebook: 'www.facebook.com' },
+            { Instagram: 'www.instagram.com' },
+            { LinkedIn: 'www.linkedIn.com' },
+            { GitHub: 'www.github.com' },
+            { Snapchat: 'www.snapchat.com'}
         ],
         dropdownTitle: 'Social Media'
     }
@@ -34,6 +34,8 @@ class DropdownPage extends React.Component {
                 <Dropdown
                     title={dropdownTitle}
                     list={dropdownList}
+                    headerColor={'white'}
+                    headerBackgroundColor={'black'}
                 />
             </DropdownPageContainer>
         )
